@@ -1,8 +1,8 @@
 {
-  "name": "vue",
+  "name": "vue",//npm 的名字
   "version": "2.6.14",
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
-  "main": "dist/vue.runtime.common.js",
+  "main": "dist/vue.runtime.common.js",//我们在别的地方引用vue时，默认入口
   "module": "dist/vue.runtime.esm.js",
   "unpkg": "dist/vue.js",
   "jsdelivr": "dist/vue.js",

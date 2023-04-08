@@ -10,6 +10,7 @@ export * from './element'
  * Query an element selector if it's not an element already.
  */
 export function query (el: string | Element): Element {
+  //lcc:所以也是可以直接传一个dom对象
   if (typeof el === 'string') {
     const selected = document.querySelector(el)
     if (!selected) {
