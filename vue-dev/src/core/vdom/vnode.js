@@ -72,6 +72,7 @@ export default class VNode {
 }
 
 export const createEmptyVNode = (text: string = '') => {
+  //lcc:实际上就是一个注释vnode
   const node = new VNode()
   node.text = text
   node.isComment = true

@@ -67,6 +67,7 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     if (vm.$options.el) {
+      //lcc: 调用$mount方法
       vm.$mount(vm.$options.el)
     }
   }

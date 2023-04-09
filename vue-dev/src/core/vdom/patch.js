@@ -72,7 +72,7 @@ export function createPatchFunction (backend) {
   const cbs = {}
 
   const { modules, nodeOps } = backend
-
+  //lcc:在patch的过程中不同时间会执行相对应的钩子函数
   for (i = 0; i < hooks.length; ++i) {
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
@@ -166,6 +166,7 @@ export function createPatchFunction (backend) {
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
         : nodeOps.createElement(tag, vnode)
+        //lcc:也就是原生的document.createElement
       setScope(vnode)
 
       /* istanbul ignore if */
@@ -188,10 +189,12 @@ export function createPatchFunction (backend) {
           insert(parentElm, vnode.elm, refElm)
         }
       } else {
+        //lcc: createChildren:如果children是数组就递归地调用原生DOM的createElemet 如果不是就创建一个文本节点然后appendChild
         createChildren(vnode, children, insertedVnodeQueue)
         if (isDef(data)) {
           invokeCreateHooks(vnode, insertedVnodeQueue)
         }
+        //lcc:最后就会挂载到body上
         insert(parentElm, vnode.elm, refElm)
       }
 
@@ -200,6 +203,7 @@ export function createPatchFunction (backend) {
       }
     } else if (isTrue(vnode.isComment)) {
       vnode.elm = nodeOps.createComment(vnode.text)
+
       insert(parentElm, vnode.elm, refElm)
     } else {
       vnode.elm = nodeOps.createTextNode(vnode.text)
@@ -287,6 +291,7 @@ export function createPatchFunction (backend) {
         checkDuplicateKeys(children)
       }
       for (let i = 0; i < children.length; ++i) {
+        //lcc:所以是先创建children 插入父节点，，一直互相递归调用，
         createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i)
       }
     } else if (isPrimitive(vnode.text)) {
@@ -698,6 +703,7 @@ export function createPatchFunction (backend) {
   }
 
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
+    //lcc:这里是删除的时候的逻辑
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
@@ -711,6 +717,7 @@ export function createPatchFunction (backend) {
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
     } else {
+      //lcc:true
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
@@ -720,6 +727,7 @@ export function createPatchFunction (backend) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
+          //lcc:是否是一个服务端渲染
           if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true
@@ -740,6 +748,7 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
+          //lcc:真实的DOM转换成一个vnode实例
           oldVnode = emptyNodeAt(oldVnode)
         }
 
@@ -748,6 +757,7 @@ export function createPatchFunction (backend) {
         const parentElm = nodeOps.parentNode(oldElm)
 
         // create new node
+        //lcc:重要 vnode挂载到真实的DOM上
         createElm(
           vnode,
           insertedVnodeQueue,

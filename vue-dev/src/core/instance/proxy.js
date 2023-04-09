@@ -55,8 +55,10 @@ if (process.env.NODE_ENV !== 'production') {
   const hasHandler = {
     has (target, key) {
       const has = key in target
+      //lcc:是否是全局的私有方法
       const isAllowed = allowedGlobals(key) ||
         (typeof key === 'string' && key.charAt(0) === '_' && !(key in target.$data))
+      //lcc:render过程中遇到没有定义的 变量
       if (!has && !isAllowed) {
         if (key in target.$data) warnReservedPrefix(target, key)
         else warnNonPresent(target, key)
@@ -76,9 +78,11 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   initProxy = function initProxy (vm) {
+    //lcc:看当前浏览器是否支持Proxy语法
     if (hasProxy) {
       // determine which proxy handler to use
       const options = vm.$options
+      //lcc:没有用户自定义的render函数 所以=> hasHandler : true
       const handlers = options.render && options.render._withStripped
         ? getHandler
         : hasHandler
