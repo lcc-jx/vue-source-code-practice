@@ -18,7 +18,7 @@ import { isFalse, isTrue, isDef, isUndef, isPrimitive } from 'shared/util'
 export function simpleNormalizeChildren (children: any) {
   for (let i = 0; i < children.length; i++) {
     if (Array.isArray(children[i])) {
-      //lcc:只能保证一层深度的数组被拍平
+      //lcc vue chapter1/2:只能保证一层深度的数组被拍平
       return Array.prototype.concat.apply([], children)
     }
   }
@@ -30,7 +30,7 @@ export function simpleNormalizeChildren (children: any) {
 // with hand-written render functions / JSX. In such cases a full normalization
 // is needed to cater to all possible types of children values.
 export function normalizeChildren (children: any): ?Array<VNode> {
-  //lcc:isPrimitive判断是否是基础类型 如果是就创建一个text的vnode
+  //lcc vue chapter1/2:isPrimitive判断是否是基础类型 如果是就创建一个text的vnode
   return isPrimitive(children)
     ? [createTextVNode(children)]
     : Array.isArray(children)
@@ -51,12 +51,12 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
     lastIndex = res.length - 1
     last = res[lastIndex]
     //  nested
-    //lcc:这里针对可能children下还是数组的情况，比如 template slot v-for 会递归地调用这个函数 
+    //lcc vue chapter1/2:这里针对可能children下还是数组的情况，比如 template slot v-for 会递归地调用这个函数 
     if (Array.isArray(c)) {
       if (c.length > 0) {
         c = normalizeArrayChildren(c, `${nestedIndex || ''}_${i}`)
         // merge adjacent text nodes
-        //lcc:如果这次和下次都是文本节点，就合并成一个
+        //lcc vue chapter1/2:如果这次和下次都是文本节点，就合并成一个
         if (isTextNode(c[0]) && isTextNode(last)) {
           res[lastIndex] = createTextVNode(last.text + (c[0]: any).text)
           c.shift()

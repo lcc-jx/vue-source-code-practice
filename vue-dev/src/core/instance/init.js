@@ -13,7 +13,7 @@ import { extend, mergeOptions, formatComponentName } from '../util/index'
 let uid = 0
 
 export function initMixin (Vue: Class<Component>) {
-  //lcc: 原型上挂了一个方法
+  //lcc vue chapter1/2: 原型上挂了一个方法
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // a uid
@@ -67,7 +67,7 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     if (vm.$options.el) {
-      //lcc: 调用$mount方法
+      //lcc vue chapter1/2: 调用$mount方法
       vm.$mount(vm.$options.el)
     }
   }

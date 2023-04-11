@@ -33,7 +33,7 @@ export function createElement (
   normalizationType: any,
   alwaysNormalize: boolean
 ): VNode | Array<VNode> {
-  //lcc:没有data属性的时候就把后几个参数都往前移
+  //lcc vue chapter1/2:没有data属性的时候就把后几个参数都往前移
   if (Array.isArray(data) || isPrimitive(data)) {
     normalizationType = children
     children = data
@@ -52,7 +52,7 @@ export function _createElement (
   children?: any,
   normalizationType?: number
 ): VNode | Array<VNode> {
-  //lcc:不允许这个data是响应式的
+  //lcc vue chapter1/2:不允许这个data是响应式的
   if (isDef(data) && isDef((data: any).__ob__)) {
     process.env.NODE_ENV !== 'production' && warn(
       `Avoid using observed data object as vnode data: ${JSON.stringify(data)}\n` +
@@ -62,7 +62,7 @@ export function _createElement (
     return createEmptyVNode()
   }
   // object syntax in v-bind
-  //lcc:当data是Component的时候 就会有is属性
+  //lcc vue chapter1/2:当data是Component的时候 就会有is属性
   if (isDef(data) && isDef(data.is)) {
     tag = data.is
   }
@@ -90,18 +90,18 @@ export function _createElement (
     data.scopedSlots = { default: children[0] }
     children.length = 0
   }
-  //lcc:这里所做的操作就是为了将children变成一维数组
+  //lcc vue chapter1/2:这里所做的操作就是为了将children变成一维数组
   if (normalizationType === ALWAYS_NORMALIZE) {
     children = normalizeChildren(children)
   } else if (normalizationType === SIMPLE_NORMALIZE) {
     children = simpleNormalizeChildren(children)
   }
-  //lcc:现在要创建vnode
+  //lcc vue chapter1/2:现在要创建vnode
   let vnode, ns
   if (typeof tag === 'string') {
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
-    //lcc:判断tag是否是HTML原生的标签
+    //lcc vue chapter1/2:判断tag是否是HTML原生的标签
     if (config.isReservedTag(tag)) {
       // platform built-in elements
       if (process.env.NODE_ENV !== 'production' && isDef(data) && isDef(data.nativeOn) && data.tag !== 'component') {
@@ -110,7 +110,7 @@ export function _createElement (
           context
         )
       }
-      //lcc:创建
+      //lcc vue chapter1/2:创建
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -128,6 +128,7 @@ export function _createElement (
       )
     }
   } else {
+    //lcc vue chapter3:如果是Component
     // direct component options / constructor
     vnode = createComponent(tag, data, context, children)
   }

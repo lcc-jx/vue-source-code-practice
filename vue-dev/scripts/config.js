@@ -24,24 +24,24 @@ const weexFactoryPlugin = {
     return '}'
   }
 }
-//lcc:aliases 其实就是提供了一个到最终真实文件的映射关系
+//lcc vue chapter1/2:aliases 其实就是提供了一个到最终真实文件的映射关系
 const aliases = require('./alias')
-//lcc:以web-runtime-cjs-dev 里面的entry举例。
+//lcc vue chapter1/2:以web-runtime-cjs-dev 里面的entry举例。
 const resolve = p => {
   const base = p.split('/')[0]
-  //lcc:base是web
+  //lcc vue chapter1/2:base是web
   if (aliases[base]) {
-    //lcc:alias[base]对应的是 /src/platforms/web
+    //lcc vue chapter1/2:alias[base]对应的是 /src/platforms/web
     return path.resolve(aliases[base], p.slice(base.length + 1))
-    //lcc: 所以此函数返回 /src/platforms/web/entry-runtime.js
-    //lcc:对于path.resolve这个函数可以去看闪念笔记
+    //lcc vue chapter1/2: 所以此函数返回 /src/platforms/web/entry-runtime.js
+    //lcc vue chapter1/2:对于path.resolve这个函数可以去看闪念笔记
   } else {
     return path.resolve(__dirname, '../', p)
   }
 }
 
 const builds = {
-  //lcc:每个Key对应的也是一个对象，不同版本vuejs的编译配置，每个配置都有一个入口entry
+  //lcc vue chapter1/2:每个Key对应的也是一个对象，不同版本vuejs的编译配置，每个配置都有一个入口entry
   // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify
   'web-runtime-cjs-dev': {
     entry: resolve('web/entry-runtime.js'),
@@ -221,7 +221,7 @@ const builds = {
 
 function genConfig (name) {
   const opts = builds[name]
-  //lcc:新建的这个config对象才是rollup所对应的配置选项
+  //lcc vue chapter1/2:新建的这个config对象才是rollup所对应的配置选项
   const config = {
     input: opts.entry,
     external: opts.external,

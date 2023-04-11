@@ -77,7 +77,7 @@ export default class Watcher {
       ? expOrFn.toString()
       : ''
     // parse expression for getter
-    //lcc: from: lifecycle 对应expOrFn: updateComponent
+    //lcc vue chapter1/2: from: lifecycle 对应expOrFn: updateComponent
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
     } else {
@@ -101,12 +101,12 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
-    //lcc:依赖收集相关
+    //lcc vue chapter1/2:依赖收集相关
     pushTarget(this)
     let value
     const vm = this.vm
     try {
-      //lcc:调用到的getter 也就是updateComponent方法了 -> lifycycle文件
+      //lcc vue chapter1/2:调用到的getter 也就是updateComponent方法了 -> lifycycle文件
       value = this.getter.call(vm, vm)
     } catch (e) {
       if (this.user) {

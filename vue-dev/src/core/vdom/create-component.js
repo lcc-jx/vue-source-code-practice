@@ -101,14 +101,17 @@ const hooksToMerge = Object.keys(componentVNodeHooks)
 export function createComponent (
   Ctor: Class<Component> | Function | Object | void,
   data: ?VNodeData,
-  context: Component,
+  context: Component,//lcc vue chapter3:当前vm实例
   children: ?Array<VNode>,
   tag?: string
 ): VNode | Array<VNode> | void {
   if (isUndef(Ctor)) {
     return
   }
-
+  //lcc vue chapter3:vm.$options._base
+  //lcc vue chapter3:在global-api/index.js中 Vue.options._base = Vue
+  //lcc vue chapter3:在init中又将vm.$options = mergeOptions(....)
+  //lcc vue chapter3:vm.$options._base就是Vue
   const baseCtor = context.$options._base
 
   // plain options object: turn it into a constructor
@@ -125,7 +128,7 @@ export function createComponent (
     return
   }
 
-  // async component
+  // async component 异步组件
   let asyncFactory
   if (isUndef(Ctor.cid)) {
     asyncFactory = Ctor
@@ -186,6 +189,7 @@ export function createComponent (
   installComponentHooks(data)
 
   // return a placeholder vnode
+  //lcc vue chapter3:组件vnode的children是空
   const name = Ctor.options.name || tag
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
@@ -232,6 +236,7 @@ function installComponentHooks (data: VNodeData) {
     const existing = hooks[key]
     const toMerge = componentVNodeHooks[key]
     if (existing !== toMerge && !(existing && existing._merged)) {
+      //lcc vue chapter3:遇到两个同名的hooks,d调用mergeHook 让一个先执行，另一个再执行
       hooks[key] = existing ? mergeHook(toMerge, existing) : toMerge
     }
   }

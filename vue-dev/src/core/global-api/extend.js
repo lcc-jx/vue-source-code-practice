@@ -20,19 +20,23 @@ export function initExtend (Vue: GlobalAPI) {
     extendOptions = extendOptions || {}
     const Super = this
     const SuperId = Super.cid
+    //lcc vue chapter3:实际上就是做了一层缓存的优化
     const cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {})
     if (cachedCtors[SuperId]) {
       return cachedCtors[SuperId]
     }
-
+    //lcc vue chapter3:组件的name
     const name = extendOptions.name || Super.options.name
     if (process.env.NODE_ENV !== 'production' && name) {
+      //lcc vue chapter3:校验组件名称是否
       validateComponentName(name)
     }
 
+    //lcc vue chapter3:定义了子的构造函数
     const Sub = function VueComponent (options) {
       this._init(options)
     }
+    //lcc vue chapter3:子的构造器的原型指向父的原型，所以在执行子的this._init就会执行Vue.prototype._init的方法上
     Sub.prototype = Object.create(Super.prototype)
     Sub.prototype.constructor = Sub
     Sub.cid = cid++

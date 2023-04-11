@@ -13,13 +13,13 @@ const idToTemplate = cached(id => {
   const el = query(id)
   return el && el.innerHTML
 })
-//lcc:引用过来的$mount是Runtime Only版本的，现在是Runtime + Compiler的$mount
+//lcc vue chapter1/2:引用过来的$mount是Runtime Only版本的，现在是Runtime + Compiler的$mount
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
-  //lcc:由query方法来看el是个DOM对象
+  //lcc vue chapter1/2:由query方法来看el是个DOM对象
   el = el && query(el)
 
   /* istanbul ignore if */
@@ -32,10 +32,10 @@ Vue.prototype.$mount = function (
 
   const options = this.$options
   // resolve template/el and convert to render function
-  //lcc:判断你是否写了render()函数
+  //lcc vue chapter1/2:判断你是否写了render()函数
   if (!options.render) {
     let template = options.template
-    //lcc:判断是否写了template选项
+    //lcc vue chapter1/2:判断是否写了template选项
     if (template) {
       if (typeof template === 'string') {
         if (template.charAt(0) === '#') {
@@ -57,11 +57,11 @@ Vue.prototype.$mount = function (
         return this
       }
     } else if (el) {
-      //lcc:获取当前el的outerHTML （包含自身）
+      //lcc vue chapter1/2:获取当前el的outerHTML （包含自身）
       template = getOuterHTML(el)
     }
     if (template) {
-      //lcc:编译相关 会在后续说到
+      //lcc vue chapter1/2:编译相关 会在后续说到
       /* istanbul ignore if */
       if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         mark('compile')
@@ -91,7 +91,7 @@ Vue.prototype.$mount = function (
  * Get outerHTML of elements, taking care
  * of SVG elements in IE as well.
  */
-//lcc:其实就是outHTML的一种polyfill的方法 
+//lcc vue chapter1/2:其实就是outHTML的一种polyfill的方法 
 function getOuterHTML (el: Element): string {
   if (el.outerHTML) {
     return el.outerHTML

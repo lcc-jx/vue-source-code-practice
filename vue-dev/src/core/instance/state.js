@@ -43,7 +43,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.set = function proxySetter (val) {
     this[sourceKey][key] = val
   }
-  //lcc 所以当我们访问 vm.key的时候我们就能访问到vm._data.key
+  //lcc vue chapter1/2 所以当我们访问 vm.key的时候我们就能访问到vm._data.key
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
@@ -117,7 +117,7 @@ function initData (vm: Component) {
     ? getData(data, vm)
     : data || {}
   if (!isPlainObject(data)) {
-    //lcc:如果不是对象就报个警告
+    //lcc vue chapter1/2:如果不是对象就报个警告
     data = {}
     process.env.NODE_ENV !== 'production' && warn(
       'data functions should return an object:\n' +
@@ -132,7 +132,7 @@ function initData (vm: Component) {
   let i = keys.length
   while (i--) {
     const key = keys[i]
-    //lcc:防止data中的属性名和methods中的重复
+    //lcc vue chapter1/2:防止data中的属性名和methods中的重复
     if (process.env.NODE_ENV !== 'production') {
       if (methods && hasOwn(methods, key)) {
         warn(
@@ -141,7 +141,7 @@ function initData (vm: Component) {
         )
       }
     }
-    //lcc:防止data中的属性名和props中的重复
+    //lcc vue chapter1/2:防止data中的属性名和props中的重复
     if (props && hasOwn(props, key)) {
       process.env.NODE_ENV !== 'production' && warn(
         `The data property "${key}" is already declared as a prop. ` +
@@ -149,7 +149,7 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(key)) {
-      //lcc: 为vm._data做了层代理 ,具体见上面的proxy函数
+      //lcc vue chapter1/2: 为vm._data做了层代理 ,具体见上面的proxy函数
       proxy(vm, `_data`, key)
     }
   }

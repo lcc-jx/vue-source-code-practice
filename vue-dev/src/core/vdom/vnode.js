@@ -32,11 +32,11 @@ export default class VNode {
   constructor (
     tag?: string,
     data?: VNodeData,
-    children?: ?Array<VNode>,
+    children?: ?Array<VNode>,//lcc vue chapter3:组件vnode:null
     text?: string,
     elm?: Node,
     context?: Component,
-    componentOptions?: VNodeComponentOptions,
+    componentOptions?: VNodeComponentOptions,//lcc vue chapter3:这里包含了children
     asyncFactory?: Function
   ) {
     this.tag = tag
@@ -72,7 +72,7 @@ export default class VNode {
 }
 
 export const createEmptyVNode = (text: string = '') => {
-  //lcc:实际上就是一个注释vnode
+  //lcc vue chapter1/2:实际上就是一个注释vnode
   const node = new VNode()
   node.text = text
   node.isComment = true

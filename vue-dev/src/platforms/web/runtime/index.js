@@ -31,11 +31,11 @@ extend(Vue.options.directives, platformDirectives)
 extend(Vue.options.components, platformComponents)
 
 // install platform patch function
-//lcc:因为vue也可以跑在服务端的， 这里为了判断是否跑在浏览器端，如果不是，就返回一个空函数
+//lcc vue chapter1/2:因为vue也可以跑在服务端的， 这里为了判断是否跑在浏览器端，如果不是，就返回一个空函数
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
-//lcc:runtime only版本
+//lcc vue chapter1/2:runtime only版本
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean

@@ -144,12 +144,12 @@ export function mountComponent (
   hydrating?: boolean
 ): Component {
   vm.$el = el
-  //lcc:没有正常/转换的render
+  //lcc vue chapter1/2:没有正常/转换的render
   if (!vm.$options.render) {
     vm.$options.render = createEmptyVNode
     if (process.env.NODE_ENV !== 'production') {
       /* istanbul ignore if */
-      //lcc:如果在Runtime only版本 使用template无法进行编译 会报警告
+      //lcc vue chapter1/2:如果在Runtime only版本 使用template无法进行编译 会报警告
       if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
         vm.$options.el || el) {
         warn(
@@ -188,10 +188,10 @@ export function mountComponent (
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
-    //lcc:
+    //lcc vue chapter1/2:
     updateComponent = () => {
       vm._update(vm._render(), hydrating)
-      //lcc:vm._render()渲染出来VNode hydrating：是与服务端渲染相关
+      //lcc vue chapter1/2:vm._render()渲染出来VNode hydrating：是与服务端渲染相关
     }
   }
 
