@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import store from './store/index.js'
 
 Vue.config.productionTip = false
 
@@ -13,16 +14,10 @@ Vue.config.productionTip = false
 // })
 new Vue({
   el:'#app',
-  render(createElement){
-    return createElement('div', {
-      attrs:{
-        id:'app1',
-      }
-    }, this.message)
-  },
-  data(){
-    return {
-      message:'今天也要加油啊'
-    }
-  }
+  store,
+  render:h => h(App)
 })
+// app.use(store)
+// console.log(store)
+
+
