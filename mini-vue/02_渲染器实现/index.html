@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./renderer.js"></script>
+    <script>
+      // 1、通过h函数去创建vnode
+      const vnode = h("div", { class: "why", id: "aaaa" }, [
+        h("h2", null, "当前计数：100"),
+        h("button", { onClick: function () {} }, "+1"),
+      ]); //vdom
+
+      // 2.通过mount函数将我们的vnode挂载到我们的#app上  虚拟DOM => 真实DOM
+      mount(vnode, document.querySelector("#app"));
+
+      // 3、创建一个新的vnode
+      const vnode1 = h("div", { class: "coderwhy", id: "aaaa" }, [
+        h("h2", null, "当前计数：1000"),
+        h("button", { onClick: function () {} }, "+1"),
+      ]);
+      
+      // 让vnode和vnode1diff ,修改真实元素
+      setTimeout(() => {
+        patch(vnode, vnode1);
+      }, 2000);
+    </script>
+  </body>
+</html>
